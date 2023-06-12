@@ -1,6 +1,7 @@
 import React, { FC } from "react";
 import { IClothes } from "../types/Clothes";
 import { Rating } from "@mui/material";
+import MyButton from "./UI/MyButton";
 
 interface IClothesItemProps {
   clothes: IClothes;
@@ -10,26 +11,32 @@ const ClothesItem: FC<IClothesItemProps> = ({ clothes }) => {
   const [rating, setRating] = React.useState<number | null>(0);
 
   return (
-    <div className="relative w-[250px] h-[200px] m-2">
-      <div>
-        <img src={clothes.image} alt={clothes.image} className="" />
+    <div className="m-2 flex flex-col justify-between w-[20%] h-[20%]">
+      <div className="relative">
+        <img
+          src={clothes.image}
+          alt={clothes.image}
+          className="hover:pb-2 hover:pl-2 hover:bg-light-gray"
+        />
         <button className="absolute top-0 right-0 m-2">❤️</button>
       </div>
-      <div>
-        <h2 className="">{clothes.name}</h2>
-        <p>Цена: {clothes.price}</p>
-        <p>Описание: {clothes.description}</p>
-        <button>В корзину</button>
+      <div className="flex flex-col">
+        <h2 className="text-xl font-bold m-1 text-white">{clothes.name}</h2>
+        <p className="text-xs m-1 text-white">Цена: {clothes.price} $</p>
+        <p className="text-xs m-1 text-white">
+          Описание: {clothes.description}
+        </p>
+        <MyButton>В корзину</MyButton>
       </div>
-      <div>
+      <div className="flex flex-row justify-around mb-2">
         <Rating
           value={rating}
           onChange={(event, newValue) => {
             setRating(newValue);
           }}
-          className="!text-mint-green"
+          className="!text-purple-peril"
         />
-        <p>Отзывы (0)</p>
+        <p className="text-white">Отзывы (0)</p>
       </div>
     </div>
   );
