@@ -1,23 +1,23 @@
 export interface IClothes {
     id: number;
-    name:string;
-    subCategory?:ISubCategory;
-    description:string;
-    price:number;
-    sizes?:string;
-    colors?:string;
-    image:string;
-    brand?:string;
-    isAvailability:boolean;
+    title: string;
+    subcategory_id?: number; // Идентификатор подкатегории, к которой относится товар
+    price: number;
+    description: string;
+    sizes?: string[]; // Размеры товара (например, ["S", "M", "L"])
+    colors?: string[]; // Доступные цвета товара (например, ["Red", "Blue", "Green"])
+    image: string; // Путь к изображению товара
+    brand?: string; // Бренд товара
+    isAvailability?: boolean; // Доступность товара (true - доступен, false - недоступен)
 }
 
-export interface ICategory{
-    id:number;
-    name:string;
+export interface ICategory {
+    id: number;
+    name: string;
 }
 
-export interface ISubCategory{
-    id:number;
-    categoryId:ICategory;
-    name:string;
+export interface ISubCategory {
+    id: number;
+    categoryId: number;
+    name: string;
 }

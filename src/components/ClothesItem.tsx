@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 import { IClothes } from "../types/Clothes";
 import { Rating } from "@mui/material";
 import MyButton from "./UI/MyButton";
@@ -8,24 +8,23 @@ interface IClothesItemProps {
 }
 
 const ClothesItem: FC<IClothesItemProps> = ({ clothes }) => {
-  const [rating, setRating] = React.useState<number | null>(0);
+  const [rating, setRating] = useState<number | null>(0);
 
   return (
-    <div className="m-2 flex flex-col justify-between w-[20%] h-[20%]">
-      <div className="relative">
+    <div className="m-2 flex flex-col justify-between w-[20%] hover:bg-light-gray">
+      <div className="relative p-2 h-[200px]">
         <img
           src={clothes.image}
           alt={clothes.image}
-          className="hover:pb-2 hover:pl-2 hover:bg-light-gray"
+          className="hover:scale-105 hover:transition hover:duration-700 w-full h-full object-contain"
         />
         <button className="absolute top-0 right-0 m-2">❤️</button>
       </div>
       <div className="flex flex-col">
-        <h2 className="text-xl font-bold m-1 text-white">{clothes.name}</h2>
-        <p className="text-xs m-1 text-white">Цена: {clothes.price} $</p>
-        <p className="text-xs m-1 text-white">
-          Описание: {clothes.description}
-        </p>
+        <h2 className="text-[18px] font-bold m-1 text-white line-clamp-1 hover:line-clamp-none ">
+          {clothes.title}
+        </h2>
+        <p className="text-sm m-1 text-white">Цена: {clothes.price} $</p>
         <MyButton>В корзину</MyButton>
       </div>
       <div className="flex flex-row justify-around mb-2">
