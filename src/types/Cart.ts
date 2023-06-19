@@ -1,5 +1,5 @@
 // Интерфейс для корзины
-export interface Cart {
+export interface ICart {
     id: number;
     userId: number; // Идентификатор пользователя, у которого есть товары в корзине
     productId: number; // Идентификатор товара, находящегося в корзине

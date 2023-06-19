@@ -1,17 +1,16 @@
-import ClothesItem from "./components/ClothesItem";
-import { useGetClothesQuery } from "./store/reducers/clothes.api";
-import { IClothes } from "./types/Clothes";
+import { Route, Routes } from "react-router-dom";
+import Header from "./components/Header";
+import CartPage from "./pages/CartPage";
+import MainPage from "./pages/MainPage";
 
 function App() {
-  const { data } = useGetClothesQuery(null, {});
-
   return (
     <div className="bg-dark-gray">
-      <div className="flex flex-row flex-wrap items-stretch content-between justify-center">
-        {data?.map((cloth) => (
-          <ClothesItem key={cloth.id} clothes={cloth} />
-        ))}
-      </div>
+      <Header />
+      <Routes>
+        <Route path="/" element={<MainPage />} />
+        <Route path="/cart" element={<CartPage />} />
+      </Routes>
     </div>
   );
 }

@@ -1,7 +1,10 @@
-import React, { FC, useState } from "react";
-import { IClothes } from "../types/Clothes";
 import { Rating } from "@mui/material";
+import { FC, useState } from "react";
+import { useAppDispatch } from "../hooks/useAppDispatch";
+import { IClothes } from "../types/Clothes";
 import MyButton from "./UI/MyButton";
+import favoriteDefault from "../assets/image/favoriteDefault.svg";
+import favoriteTap from "../assets/image/favoriteTap.svg";
 
 interface IClothesItemProps {
   clothes: IClothes;
@@ -9,25 +12,35 @@ interface IClothesItemProps {
 
 const ClothesItem: FC<IClothesItemProps> = ({ clothes }) => {
   const [rating, setRating] = useState<number | null>(0);
+  const { addItemToCart } = useAppDispatch();
+  const [isFavorite, setIsFavorite] = useState(false);
 
   return (
-    <div className="m-2 flex flex-col justify-between w-[20%] hover:bg-light-gray">
+    <div className="m-2 flex flex-col flex-wrap justify-between  md:w-[19%] w-[90%] hover:bg-light-gray shadow-xl">
       <div className="relative p-2 h-[200px]">
         <img
           src={clothes.image}
           alt={clothes.image}
-          className="hover:scale-105 hover:transition hover:duration-700 w-full h-full object-contain"
+          className=" w-full h-full object-contain"
         />
-        <button className="absolute top-0 right-0 m-2">❤️</button>
+        <button className="absolute top-0 right-0 m-2" onClick={()=>setIsFavorite(!isFavorite)}>
+          <img
+            src={!isFavorite ? favoriteDefault : favoriteTap}
+            alt="favorite"
+            className="h-6 hover:scale-125 ease-in duration-300"
+          />
+        </button>
       </div>
       <div className="flex flex-col">
-        <h2 className="text-[18px] font-bold m-1 text-white line-clamp-1 hover:line-clamp-none ">
+        <h2 className="text-[17px] font-bold m-1 text-white line-clamp-1 hover:line-clamp-none cursor-pointer">
           {clothes.title}
         </h2>
+
         <p className="text-sm m-1 text-white">Цена: {clothes.price} $</p>
-        <MyButton>В корзину</MyButton>
       </div>
-      <div className="flex flex-row justify-around mb-2">
+
+      <MyButton onClick={() => addItemToCart(clothes)}>В корзину</MyButton>
+      <div className="flex flex-row flex-wrap justify-around mb-2">
         <Rating
           value={rating}
           onChange={(event, newValue) => {
