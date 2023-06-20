@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { IClothes } from "../../types/Clothes";
 
-const API_URL = "https://fakestoreapi.com/products";
+const API_URL = "http://localhost:4000/clothes";
 
 export const clothesApi = createApi({
     reducerPath: 'clothesApi',
@@ -11,7 +11,8 @@ export const clothesApi = createApi({
     endpoints: (builder) => ({
         getClothes: builder.query<IClothes[], null>({
             query: () => '/'
-        })
+        }),
+
     })
 })
 

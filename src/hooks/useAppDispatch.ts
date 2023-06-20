@@ -1,15 +1,16 @@
 import { bindActionCreators } from "@reduxjs/toolkit";
 import { useMemo } from "react";
 import { useDispatch } from "react-redux";
-import { actions } from "../store/reducers/cart.slice";
+import { actions as cartActions } from "../store/reducers/cart.slice";
+import { actions as favoriteActions } from "..//store/reducers/favorite.slice"
 
 const rootActions = {
-    ...actions,
-  };
+  ...cartActions,
+  ...favoriteActions
+};
 
 export const useAppDispatch = () => {
-    const dispatch = useDispatch();
-  
-    return useMemo(() => bindActionCreators(rootActions, dispatch), [dispatch]);
-  };
-  
+  const dispatch = useDispatch();
+
+  return useMemo(() => bindActionCreators(rootActions, dispatch), [dispatch]);
+};

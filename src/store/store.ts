@@ -1,11 +1,13 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit"
 import { clothesApi } from "./reducers/clothes.api"
-import { reducer as cartReduceer } from "./reducers/cart.slice"
+import { reducer as cartReducer } from "./reducers/cart.slice"
+import { reducer as favoriteReducer } from "./reducers/favorite.slice"
 
 
 export const reducers = combineReducers({
   [clothesApi.reducerPath]: clothesApi.reducer,
-  cart: cartReduceer,
+  cart: cartReducer,
+  favorite: favoriteReducer
 })
 
 export const store = configureStore({

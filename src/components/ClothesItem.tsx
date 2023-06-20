@@ -5,6 +5,7 @@ import { IClothes } from "../types/Clothes";
 import MyButton from "./UI/MyButton";
 import favoriteDefault from "../assets/image/favoriteDefault.svg";
 import favoriteTap from "../assets/image/favoriteTap.svg";
+import { useTypedSelector } from "../hooks/useTypedSelector";
 
 interface IClothesItemProps {
   clothes: IClothes;
@@ -13,7 +14,16 @@ interface IClothesItemProps {
 const ClothesItem: FC<IClothesItemProps> = ({ clothes }) => {
   const [rating, setRating] = useState<number | null>(0);
   const { addItemToCart } = useAppDispatch();
+  const { addToFavorite } = useAppDispatch();
   const [isFavorite, setIsFavorite] = useState(false);
+  const {favorite} = useTypedSelector(state=>state)
+
+  const favoriteHandler = () => {
+    addToFavorite(clothes);
+    setIsFavorite(!isFavorite);
+    console.log(favorite);
+    
+  };
 
   return (
     <div className="m-2 flex flex-col flex-wrap justify-between  md:w-[19%] w-[90%] hover:bg-light-gray shadow-xl">
@@ -23,7 +33,10 @@ const ClothesItem: FC<IClothesItemProps> = ({ clothes }) => {
           alt={clothes.image}
           className=" w-full h-full object-contain"
         />
-        <button className="absolute top-0 right-0 m-2" onClick={()=>setIsFavorite(!isFavorite)}>
+        <button
+          className="absolute top-0 right-0 m-2"
+          onClick={() => favoriteHandler()}
+        >
           <img
             src={!isFavorite ? favoriteDefault : favoriteTap}
             alt="favorite"
