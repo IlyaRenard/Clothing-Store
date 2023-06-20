@@ -5,9 +5,17 @@ import menu from "../assets/image/menu.svg";
 import searchIcon from "../assets/image/search.svg";
 import MyButton from "./UI/MyButton";
 import { useTypedSelector } from "../hooks/useTypedSelector";
+import { FC, MouseEvent, useState } from "react";
 
-const Header = () => {
+const Header: FC = () => {
   const { cart } = useTypedSelector((state) => state);
+  const {favorite}= useTypedSelector(state=>state)
+  const [open, setOpen] = useState(false);
+
+
+  const dropDownHandler = () => {
+    setOpen(!open);
+  };
 
   return (
     <header>
@@ -30,15 +38,32 @@ const Header = () => {
             </button>
           </div>
 
-          <div className="flex items-center">
-            <div>
-              <NavLink to="/signin">
-                <MyButton>Sign In</MyButton>
-              </NavLink>
+          <div className="flex items-center  mr-7">
+            <div className="relative">
+              <MyButton onClick={dropDownHandler}>Войти</MyButton>
+
+              {open && (
+                <div className="flex flex-col absolute  top-14 md:right-0 left-1 bg-light-gray w-fit z-50 p-1">
+                  <a
+                    href="/signin"
+                    className=" p-3 shadow-md hover:text-mint-green w-full inline-block"
+                  >
+                    Войти
+                  </a>
+
+                  <a
+                    href="/favorite"
+                    className=" p-3 shadow-md hover:text-mint-green w-full inline-block whitespace-nowrap"
+                  >
+                    Избранное:
+                    <span className="ml-1 font-bold">{favorite.length}</span>
+                  </a>
+                </div>
+              )}
             </div>
             <div className="relative">
               <NavLink to="/cart">
-                <img src={cartIcon} alt="Cart" className="h-9" />
+                <img src={cartIcon} alt="Cart" className="h-9 " />
                 <span className="absolute text-[17px] font-bold -top-2 -right-2 text-black bg-mint-green rounded-full px-2">
                   {cart.length}
                 </span>
@@ -52,7 +77,7 @@ const Header = () => {
           <button>
             <img src={menu} alt="menu" className="h-8 mr-2" />
           </button>
-          <span className="text-[18px] text-white ">All Category</span>
+          <span className="text-[18px] text-white ">Все категории</span>
         </div>
       </nav>
     </header>

@@ -26,7 +26,7 @@ const ClothesItem: FC<IClothesItemProps> = ({ clothes }) => {
   };
 
   return (
-    <div className="m-2 flex flex-col flex-wrap justify-between  md:w-[19%] w-[90%] hover:bg-light-gray shadow-xl">
+    <div className="m-2 flex flex-col flex-wrap justify-between  md:w-[19%] w-[90%] hover:bg-light-gray shadow-xl z-0">
       <div className="relative p-2 h-[200px]">
         <img
           src={clothes.image}
