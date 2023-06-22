@@ -8,12 +8,23 @@ export const clothesApi = createApi({
     baseQuery: fetchBaseQuery({
         baseUrl: API_URL
     }),
-    endpoints: (builder) => ({
-        getClothes: builder.query<IClothes[], null>({
-            query: () => '/'
+    tagTypes: ['Clothes'],
+    endpoints: (build) => ({
+        getClothes: build.query<IClothes[], null>({
+            query: () => '/',
+            providesTags: result => ['Clothes']
         }),
+        addClothes: build.mutation<IClothes, IClothes>({
+            query: (clothes) => ({
+                url: '/',
+                method: "POST",
+                body: clothes,
+            }),
+            invalidatesTags: ['Clothes']
+        }),
+
 
     })
 })
 
-export const { useGetClothesQuery } = clothesApi
+export const { useGetClothesQuery, useAddClothesMutation } = clothesApi

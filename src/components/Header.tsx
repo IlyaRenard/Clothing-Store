@@ -1,17 +1,18 @@
+import { FC, useState } from "react";
 import { NavLink } from "react-router-dom";
 import cartIcon from "../assets/image/cart.svg";
 import logo from "../assets/image/logo.svg";
 import menu from "../assets/image/menu.svg";
 import searchIcon from "../assets/image/search.svg";
-import MyButton from "./UI/MyButton";
 import { useTypedSelector } from "../hooks/useTypedSelector";
-import { FC, MouseEvent, useState } from "react";
+import MyButton from "./UI/MyButton";
 
 const Header: FC = () => {
   const { cart } = useTypedSelector((state) => state);
-  const {favorite}= useTypedSelector(state=>state)
-  const [open, setOpen] = useState(false);
+  //const { favorite } = useTypedSelector((state) => state);
 
+  const {} = useTypedSelector((state) => state);
+  const [open, setOpen] = useState(false);
 
   const dropDownHandler = () => {
     setOpen(!open);
@@ -56,7 +57,7 @@ const Header: FC = () => {
                     className=" p-3 shadow-md hover:text-mint-green w-full inline-block whitespace-nowrap"
                   >
                     Избранное:
-                    <span className="ml-1 font-bold">{favorite.length}</span>
+                    <span className="ml-1 font-bold"></span>
                   </a>
                 </div>
               )}

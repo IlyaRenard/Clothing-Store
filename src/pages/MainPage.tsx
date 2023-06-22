@@ -3,6 +3,9 @@ import { useGetClothesQuery } from "../store/reducers/clothes.api";
 
 const MainPage = () => {
   const { data } = useGetClothesQuery(null, {});
+
+ 
+
   return (
     <div className="bg-dark-gray">
       <div className="flex md:flex-row flex-col flex-wrap items-center  justify-center">

@@ -1,11 +1,11 @@
 import { Rating } from "@mui/material";
 import { FC, useState } from "react";
-import { useAppDispatch } from "../hooks/useAppDispatch";
-import { IClothes } from "../types/Clothes";
-import MyButton from "./UI/MyButton";
 import favoriteDefault from "../assets/image/favoriteDefault.svg";
 import favoriteTap from "../assets/image/favoriteTap.svg";
+import { useAppDispatch } from "../hooks/useAppDispatch";
 import { useTypedSelector } from "../hooks/useTypedSelector";
+import { IClothes } from "../types/Clothes";
+import MyButton from "./UI/MyButton";
 
 interface IClothesItemProps {
   clothes: IClothes;
@@ -14,15 +14,9 @@ interface IClothesItemProps {
 const ClothesItem: FC<IClothesItemProps> = ({ clothes }) => {
   const [rating, setRating] = useState<number | null>(0);
   const { addItemToCart } = useAppDispatch();
-  const { addToFavorite } = useAppDispatch();
   const [isFavorite, setIsFavorite] = useState(false);
-  const {favorite} = useTypedSelector(state=>state)
-
   const favoriteHandler = () => {
-    addToFavorite(clothes);
     setIsFavorite(!isFavorite);
-    console.log(favorite);
-    
   };
 
   return (

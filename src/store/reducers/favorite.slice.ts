@@ -3,8 +3,7 @@ import { IFavorite } from "../../types/Favorite"
 import { IClothes } from './../../types/Clothes';
 
 const initialState: IFavorite[] = []
-
-
+const LS_FAV_KEY = 'rfk'
 export const favoriteSlice = createSlice({
     name: "favorite",
     initialState,
@@ -16,18 +15,19 @@ export const favoriteSlice = createSlice({
                 const index = state.findIndex((item) => item.productId === clothes.id);
                 if (index !== -1) {
                     state.splice(index, 1)
+                    localStorage.setItem(LS_FAV_KEY, JSON.stringify(state))
                 }
             }
             else {
                 state.push({
-                    id: 1,
                     userId: 0,
                     productId: clothes.id
                 })
+                localStorage.setItem(LS_FAV_KEY, JSON.stringify(state))
             }
 
         }
     }
 })
 
-export const { actions, reducer } = favoriteSlice
+export const { actions, reducer } = favoriteSlice 
