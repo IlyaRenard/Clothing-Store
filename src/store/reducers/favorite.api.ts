@@ -1,4 +1,3 @@
-import { IClothes } from "../../types/Clothes";
 import { IFavorite } from "../../types/Favorite";
 import { IUser } from "../../types/User";
 import { commonApi } from "./common.api";
