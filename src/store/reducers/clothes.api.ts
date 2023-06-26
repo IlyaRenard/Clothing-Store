@@ -1,22 +1,16 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { IClothes } from "../../types/Clothes";
+import { commonApi } from "./common.api";
 
-const API_URL = "http://localhost:4000/clothes";
 
-export const clothesApi = createApi({
-    reducerPath: 'clothesApi',
-    baseQuery: fetchBaseQuery({
-        baseUrl: API_URL
-    }),
-    tagTypes: ['Clothes'],
+export const clothesApi = commonApi.injectEndpoints({
     endpoints: (build) => ({
         getClothes: build.query<IClothes[], null>({
-            query: () => '/',
+            query: () => '/clothes',
             providesTags: result => ['Clothes']
         }),
-        addClothes: build.mutation<IClothes, IClothes>({
+        addClothes: build.mutation<null, IClothes>({
             query: (clothes) => ({
-                url: '/',
+                url: '/clothes',
                 method: "POST",
                 body: clothes,
             }),

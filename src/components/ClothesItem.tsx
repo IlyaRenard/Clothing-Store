@@ -2,21 +2,65 @@ import { Rating } from "@mui/material";
 import { FC, useState } from "react";
 import favoriteDefault from "../assets/image/favoriteDefault.svg";
 import favoriteTap from "../assets/image/favoriteTap.svg";
-import { useAppDispatch } from "../hooks/useAppDispatch";
-import { useTypedSelector } from "../hooks/useTypedSelector";
+import { useAddToCartMutation } from "../store/reducers/cart.api";
+import {
+  useAddFavoriteMutation,
+  useDeleteFavoriteMutation,
+  useGetFavoriteQuery,
+} from "../store/reducers/favorite.api";
+import { ICart } from "../types/Cart";
 import { IClothes } from "../types/Clothes";
+import { IUser } from "../types/User";
 import MyButton from "./UI/MyButton";
+import { IFavorite } from "./../types/Favorite";
 
 interface IClothesItemProps {
   clothes: IClothes;
 }
 
 const ClothesItem: FC<IClothesItemProps> = ({ clothes }) => {
+  const user: IUser = {
+    id: 1,
+    username: "Ilya",
+    email: "ilya.gavrilik.1998@gmail.com",
+    password: "8852785Ilya",
+  };
   const [rating, setRating] = useState<number | null>(0);
-  const { addItemToCart } = useAppDispatch();
+  const [addFavorite] = useAddFavoriteMutation();
+  const [addToCart] = useAddToCartMutation();
+  const [deleteFavorite] = useDeleteFavoriteMutation();
   const [isFavorite, setIsFavorite] = useState(false);
+  const { data: favoriteData } = useGetFavoriteQuery(user, {});
+
+  const favorite: IFavorite = {
+    userId: user.id,
+    productId: clothes.id,
+  };
+
+  const cartClothes: ICart = {
+    userId: user.id,
+    productId: clothes.id,
+    quantity: 1,
+  };
+
   const favoriteHandler = () => {
     setIsFavorite(!isFavorite);
+
+    if (
+      favoriteData?.find(
+        (val) => val.productId === clothes.id && val.userId === user.id
+      )
+    ) {
+      const currentFavorite = favoriteData.find(
+        (val) => val.productId === clothes.id && val.userId === user.id
+      );
+      deleteFavorite(currentFavorite as IFavorite);
+    } else addFavorite(favorite);
+  };
+
+  const cartHandler = () => {
+    addToCart(cartClothes);
+    console.log(cartClothes);
   };
 
   return (
@@ -46,7 +90,7 @@ const ClothesItem: FC<IClothesItemProps> = ({ clothes }) => {
         <p className="text-sm m-1 text-white">Цена: {clothes.price} $</p>
       </div>
 
-      <MyButton onClick={() => addItemToCart(clothes)}>В корзину</MyButton>
+      <MyButton onClick={() => cartHandler()}>В корзину</MyButton>
       <div className="flex flex-row flex-wrap justify-around mb-2">
         <Rating
           value={rating}

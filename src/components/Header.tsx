@@ -4,14 +4,20 @@ import cartIcon from "../assets/image/cart.svg";
 import logo from "../assets/image/logo.svg";
 import menu from "../assets/image/menu.svg";
 import searchIcon from "../assets/image/search.svg";
-import { useTypedSelector } from "../hooks/useTypedSelector";
+import { useGetCartQuery } from "../store/reducers/cart.api";
+import { useGetFavoriteQuery } from "../store/reducers/favorite.api";
+import { IUser } from "../types/User";
 import MyButton from "./UI/MyButton";
 
 const Header: FC = () => {
-  const { cart } = useTypedSelector((state) => state);
-  //const { favorite } = useTypedSelector((state) => state);
-
-  const {} = useTypedSelector((state) => state);
+  const user: IUser = {
+    id: 1,
+    username: "Ilya",
+    email: "ilya.gavrilik.1998@gmail.com",
+    password: "8852785Ilya",
+  };
+  const { data: cart } = useGetCartQuery(user, {});
+  const { data: favorite } = useGetFavoriteQuery(user, {});
   const [open, setOpen] = useState(false);
 
   const dropDownHandler = () => {
@@ -57,7 +63,7 @@ const Header: FC = () => {
                     className=" p-3 shadow-md hover:text-mint-green w-full inline-block whitespace-nowrap"
                   >
                     Избранное:
-                    <span className="ml-1 font-bold"></span>
+                    <span className="ml-1 font-bold">{favorite?.length}</span>
                   </a>
                 </div>
               )}
@@ -66,7 +72,7 @@ const Header: FC = () => {
               <NavLink to="/cart">
                 <img src={cartIcon} alt="Cart" className="h-9 " />
                 <span className="absolute text-[17px] font-bold -top-2 -right-2 text-black bg-mint-green rounded-full px-2">
-                  {cart.length}
+                  {cart?.length}
                 </span>
               </NavLink>
             </div>

@@ -7,9 +7,10 @@ export const favoriteApi = commonApi.injectEndpoints({
     endpoints: (build) => ({
         getFavorite: build.query<IFavorite[], IUser>({
             query: (user: IUser) => ({
-                url: `/favoirte`
+                url: `/favorite?userId=${user.id}`,
+
             }),
-            providesTags: ['Api']
+            providesTags: ['Favorite']
         }),
         addFavorite: build.mutation<null, IFavorite>({
             query: (favorite) => ({
@@ -17,14 +18,14 @@ export const favoriteApi = commonApi.injectEndpoints({
                 method: "POST",
                 body: favorite,
             }),
-            invalidatesTags: ['Api']
+            invalidatesTags: ['Favorite']
         }),
-        deleteFavorite: build.mutation<IFavorite, IClothes>({
-            query: (clothes) => ({
-                url: `/favorite/${clothes.id}`,
+        deleteFavorite: build.mutation<IFavorite, IFavorite>({
+            query: (favorite) => ({
+                url: `/favorite/${favorite.id}`,
                 method: 'DELETE',
             }),
-            invalidatesTags: ['Api']
+            invalidatesTags: ['Favorite']
 
         }),
 
@@ -32,5 +33,6 @@ export const favoriteApi = commonApi.injectEndpoints({
     overrideExisting: false,
 })
 
-const {} = favoriteApi
+
+export const { useAddFavoriteMutation, useDeleteFavoriteMutation, useGetFavoriteQuery } = favoriteApi
 
