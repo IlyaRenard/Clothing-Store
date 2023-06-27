@@ -14,8 +14,15 @@ export const cartApi = commonApi.injectEndpoints({
                 method: "POST",
                 body: cart,
             }),
-            invalidatesTags: ['Cart']
+            invalidatesTags: ["Cart"]
         }),
+        deleteFromCart: build.mutation<ICart, ICart>({
+            query: (cart) => ({
+                url: `/cart/${cart.productId}`,
+                method: "DELETE",
+            }),
+            invalidatesTags: ["Cart"]
+        })
     })
 })
 

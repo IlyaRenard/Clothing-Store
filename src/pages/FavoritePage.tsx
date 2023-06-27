@@ -4,7 +4,6 @@ import { useGetFavoriteQuery } from "../store/reducers/favorite.api";
 import { IUser } from "../types/User";
 import ClothesItem from "./../components/ClothesItem";
 import { IClothes } from "./../types/Clothes";
-import MyButton from "../components/UI/MyButton";
 
 const FavoritePage = () => {
   const user: IUser = {
@@ -33,9 +32,9 @@ const FavoritePage = () => {
   }, [favorites, clothes]);
 
   return (
-    <div>
+    <div className="h-screen">
       {favoriteClothes === undefined || !favoriteClothes.length ? (
-        <h1 className="text-2xl text-center text-white h-screen w-full mt-10">
+        <h1 className="text-2xl text-center text-white w-full mt-10">
           Нет товаров в избранном!
         </h1>
       ) : (
