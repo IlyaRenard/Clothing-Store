@@ -18,8 +18,16 @@ export const cartApi = commonApi.injectEndpoints({
         }),
         deleteFromCart: build.mutation<ICart, ICart>({
             query: (cart) => ({
-                url: `/cart/${cart.productId}`,
+                url: `/cart/${cart.id}`,
                 method: "DELETE",
+            }),
+            invalidatesTags: ["Cart"]
+        }),
+        updateCart: build.mutation<ICart, ICart>({
+            query: (cart) => ({
+                url: `/cart/${cart.id}`,
+                method: "PUT",
+                body: cart,
             }),
             invalidatesTags: ["Cart"]
         })
@@ -27,4 +35,4 @@ export const cartApi = commonApi.injectEndpoints({
 })
 
 
-export const { useGetCartQuery, useAddToCartMutation } = cartApi
+export const { useGetCartQuery, useAddToCartMutation, useDeleteFromCartMutation, useUpdateCartMutation } = cartApi

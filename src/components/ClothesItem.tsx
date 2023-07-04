@@ -40,6 +40,7 @@ const ClothesItem: FC<IClothesItemProps> = ({ clothes }) => {
   const cartClothes: ICart = {
     userId: user.id,
     productId: clothes.id,
+    cartProduct: clothes,
     quantity: 1,
   };
 
@@ -60,7 +61,6 @@ const ClothesItem: FC<IClothesItemProps> = ({ clothes }) => {
 
   const cartHandler = () => {
     addToCart(cartClothes);
-    console.log(cartClothes);
   };
 
   return (
