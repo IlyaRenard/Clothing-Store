@@ -26,7 +26,11 @@ const CartPage = () => {
       (acc, curVal) => acc + curVal.quantity * curVal?.cartProduct?.price!,
       initialValue
     );
-    setTotalCost(+total!.toFixed(2));
+    if (total === undefined) {
+      setTotalCost(0);
+    } else {
+      setTotalCost(+total!.toFixed(2));
+    }
   };
 
   useEffect(() => {
@@ -34,7 +38,7 @@ const CartPage = () => {
   }, [cart]);
 
   return (
-    <div className="h-screen">
+    <div className="max-h-full min-h-screen">
       {cart === undefined || !cart.length ? (
         <h1 className="text-2xl text-center text-white w-full mt-10">
           Нет товаров в корзине!
@@ -43,7 +47,7 @@ const CartPage = () => {
         <div className="m-2 flex flex-col md:justify-between">
           {cart?.map((val) => (
             <div key={val.id}>
-              <div className="flex flex-row md:justify-between hover:bg-light-gray shadow-xl z-0">
+              <div className="flex flex-col md:flex-row md:justify-between hover:bg-light-gray shadow-xl z-0">
                 <div className="flex flex-row">
                   <div className="relative p-2 h-[200px] w-[200px]">
                     <img

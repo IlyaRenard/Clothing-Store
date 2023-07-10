@@ -1,8 +1,12 @@
 import { Rating } from "@mui/material";
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import favoriteDefault from "../assets/image/favoriteDefault.svg";
 import favoriteTap from "../assets/image/favoriteTap.svg";
-import { useAddToCartMutation } from "../store/reducers/cart.api";
+import {
+  useAddToCartMutation,
+  useDeleteFromCartMutation,
+  useGetCartQuery,
+} from "../store/reducers/cart.api";
 import {
   useAddFavoriteMutation,
   useDeleteFavoriteMutation,
@@ -26,11 +30,14 @@ const ClothesItem: FC<IClothesItemProps> = ({ clothes }) => {
     password: "8852785Ilya",
   };
   const [rating, setRating] = useState<number | null>(0);
-  const [addFavorite] = useAddFavoriteMutation();
+  const [addToFavorite] = useAddFavoriteMutation();
   const [addToCart] = useAddToCartMutation();
-  const [deleteFavorite] = useDeleteFavoriteMutation();
+  const [deleteFromFavorite] = useDeleteFavoriteMutation();
+  const [deleteFromCart] = useDeleteFromCartMutation();
   const [isFavorite, setIsFavorite] = useState(false);
+  const [isCart, setIsCart] = useState(false);
   const { data: favoriteData } = useGetFavoriteQuery(user, {});
+  const { data: cart } = useGetCartQuery(user, {});
 
   const favorite: IFavorite = {
     userId: user.id,
@@ -47,21 +54,40 @@ const ClothesItem: FC<IClothesItemProps> = ({ clothes }) => {
   const favoriteHandler = () => {
     setIsFavorite(!isFavorite);
 
-    if (
-      favoriteData?.find(
-        (val) => val.productId === clothes.id && val.userId === user.id
-      )
-    ) {
+    if (favoriteData?.find((val) => val.productId === clothes.id)) {
       const currentFavorite = favoriteData.find(
-        (val) => val.productId === clothes.id && val.userId === user.id
+        (val) => val.productId === clothes.id
       );
-      deleteFavorite(currentFavorite as IFavorite);
-    } else addFavorite(favorite);
+      deleteFromFavorite(currentFavorite as IFavorite);
+    } else addToFavorite(favorite);
   };
 
   const cartHandler = () => {
-    addToCart(cartClothes);
+    setIsCart(!isCart);
+    if (cart?.find((val) => val.productId === clothes.id)) {
+      const currentCart = cart.find((val) => val.productId === clothes.id);
+      deleteFromCart(currentCart as ICart);
+    } else {
+      addToCart(cartClothes);
+    }
   };
+
+  const isFavoriteHandler = () => {
+    if (favoriteData?.find((val) => val.productId === clothes.id)) {
+      setIsFavorite(true);
+    }
+  };
+
+  const isCartHandler = () => {
+    if (cart?.find((val) => val.productId === clothes.id)) {
+      setIsCart(true);
+    }
+  };
+
+  useEffect(() => {
+    isFavoriteHandler();
+    isCartHandler();
+  }, []);
 
   return (
     <div className="m-2 flex flex-col flex-wrap justify-between  md:w-[19%] w-[90%] hover:bg-light-gray shadow-xl z-0">
@@ -89,8 +115,12 @@ const ClothesItem: FC<IClothesItemProps> = ({ clothes }) => {
 
         <p className="text-sm m-1 text-white">Цена: {clothes.price} $</p>
       </div>
+      {isCart ? (
+        <MyButton onClick={() => cartHandler()}>Удалить из корзины</MyButton>
+      ) : (
+        <MyButton onClick={() => cartHandler()}>В корзину</MyButton>
+      )}
 
-      <MyButton onClick={() => cartHandler()}>В корзину</MyButton>
       <div className="flex flex-row flex-wrap justify-around mb-2">
         <Rating
           value={rating}
