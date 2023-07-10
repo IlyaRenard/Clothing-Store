@@ -8,6 +8,7 @@ import { useGetCartQuery } from "../store/reducers/cart.api";
 import { useGetFavoriteQuery } from "../store/reducers/favorite.api";
 import { IUser } from "../types/User";
 import MyButton from "./UI/MyButton";
+import { useGetClothesQuery } from "../store/reducers/clothes.api";
 
 const Header: FC = () => {
   const user: IUser = {
@@ -18,10 +19,16 @@ const Header: FC = () => {
   };
   const { data: cart } = useGetCartQuery(user, {});
   const { data: favorite } = useGetFavoriteQuery(user, {});
+  const { data: clothes } = useGetClothesQuery(null, {});
   const [open, setOpen] = useState(false);
+  const [openCategory, setOpenCategory] = useState(false);
 
   const dropDownHandler = () => {
     setOpen(!open);
+  };
+
+  const dropDownCategoryhandler = () => {
+    setOpenCategory(!openCategory);
   };
 
   return (
@@ -80,11 +87,27 @@ const Header: FC = () => {
         </div>
       </nav>
       <nav className="bg-dark-gray px-4 lg:px-6 py-1 shadow-md">
-        <div className="flex flex-wrap justify-start items-center ml-2 max-w-screen-xl">
-          <button>
+        <div className="flex flex-wrap justify-start items-center ml-2 max-w-screen-xl relative">
+          <button onClick={() => dropDownCategoryhandler()}>
             <img src={menu} alt="menu" className="h-8 mr-2" />
           </button>
           <span className="text-[18px] text-white ">Все категории</span>
+
+          <div
+            className={`absolute -left-5 top-12 flex flex-col z-50 bg-dark-gray ease-in-out duration-500 ${
+              !openCategory ? "-translate-x-96" : "translate-x-0"
+            }`}
+          >
+            {clothes?.map((cloth) => (
+              <a
+                key={cloth.id}
+                href=""
+                className="p-2 w-[250px] h-full mx-3 mb-2 shadow-lg"
+              >
+                {cloth.category}
+              </a>
+            ))}
+          </div>
         </div>
       </nav>
     </header>

@@ -38,7 +38,7 @@ const CartPage = () => {
   }, [cart]);
 
   return (
-    <div className="max-h-full min-h-screen">
+    <div className="min-h-screen max-h-full">
       {cart === undefined || !cart.length ? (
         <h1 className="text-2xl text-center text-white w-full mt-10">
           Нет товаров в корзине!

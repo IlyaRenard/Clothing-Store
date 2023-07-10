@@ -24,7 +24,6 @@ const FavoritePage = () => {
       favoriteId?.includes(cloth.id)
     );
     setFavoriteClothes(clothesArray!);
-    console.log(favoriteClothes);
   };
 
   useEffect(() => {
@@ -32,7 +31,7 @@ const FavoritePage = () => {
   }, [favorites, clothes]);
 
   return (
-    <div className="h-screen">
+    <div className="min-h-screen max-h-full">
       {favoriteClothes === undefined || !favoriteClothes.length ? (
         <h1 className="text-2xl text-center text-white w-full mt-10">
           Нет товаров в избранном!

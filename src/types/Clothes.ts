@@ -1,6 +1,7 @@
 export interface IClothes {
     id: number;
     title: string;
+    category?:string;
     subcategory_id?: number; // Идентификатор подкатегории, к которой относится товар
     price: number;
     description: string;
