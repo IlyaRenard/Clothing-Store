@@ -129,7 +129,7 @@ const ClothesItem: FC<IClothesItemProps> = ({ clothes }) => {
           }}
           className="!text-purple-peril"
         />
-        <p className="text-white">Отзывы (0)</p>
+        <p className="text-white cursor-pointer">Отзывы (0)</p>
       </div>
     </div>
   );

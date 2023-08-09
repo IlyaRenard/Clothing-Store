@@ -6,7 +6,7 @@ import FavoritePage from "./pages/FavoritePage";
 
 function App() {
   return (
-    <div className="bg-dark-gray">
+    <div className="bg-dark-gray min-h-screen max-h-full">
       <Header />
       <Routes>
         <Route path="/" element={<MainPage />} />
