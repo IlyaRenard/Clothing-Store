@@ -1,26 +1,26 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import ClothesItem from "../components/ClothesItem";
 import MyButton from "../components/UI/MyButton";
-import {
-  useGetClothesQuery,
-  useSortByASCMutation,
-} from "../store/reducers/clothes.api";
+import { useSortByASCMutation } from "../store/reducers/clothes.api";
 
 const MainPage = () => {
-  const { data } = useGetClothesQuery(null, {});
+  //const { data: clothes } = useGetClothesQuery(null, {});
   const [sortType, setSortType] = useState<string>("");
-  const [sortByASC] = useSortByASCMutation();
+  const [sortByASC, { data: sortedList }] = useSortByASCMutation();
 
   const sortValue = [
+    { value: "", title: "Default" },
     { value: "title", title: "Title" },
     { value: "price", title: "Price" },
     { value: "date", title: "Date" },
   ];
 
-  const sortHandler = (e: ChangeEvent<HTMLSelectElement>) => {
-    const value = e.target.value;
-    setSortType(value);
+  useEffect(() => {
     sortByASC(sortType);
+  }, [sortType]);
+
+  const sortHandler = (e: ChangeEvent<HTMLSelectElement>) => {
+    setSortType(e.target.value);
   };
 
   return (
@@ -43,7 +43,7 @@ const MainPage = () => {
         <MyButton>Filter</MyButton>
       </div>
       <div className="flex md:flex-row flex-col flex-wrap items-center  justify-center mx-5 my-2">
-        {data?.map((cloth) => (
+        {sortedList?.map((cloth) => (
           <ClothesItem key={cloth.id} clothes={cloth} />
         ))}
       </div>
