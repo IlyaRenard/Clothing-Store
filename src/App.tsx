@@ -3,6 +3,7 @@ import Header from "./components/Header";
 import CartPage from "./pages/CartPage";
 import MainPage from "./pages/MainPage";
 import FavoritePage from "./pages/FavoritePage";
+import SignInPage from "./pages/SignInPage";
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
       <Routes>
         <Route path="/" element={<MainPage />} />
         <Route path="/cart" element={<CartPage />} />
+        <Route path="/signin" element={<SignInPage />} />
         <Route path="/favorite" element={<FavoritePage />} />
       </Routes>
     </div>

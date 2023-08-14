@@ -15,8 +15,8 @@ import {
 import { ICart } from "../types/Cart";
 import { IClothes } from "../types/Clothes";
 import { IUser } from "../types/User";
-import MyButton from "./UI/MyButton";
 import { IFavorite } from "./../types/Favorite";
+import MyButton from "./UI/MyButton";
 
 interface IClothesItemProps {
   clothes: IClothes;
@@ -29,7 +29,7 @@ const ClothesItem: FC<IClothesItemProps> = ({ clothes }) => {
     email: "ilya.gavrilik.1998@gmail.com",
     password: "8852785Ilya",
   };
-  const [rating, setRating] = useState<number | null>(0);
+
   const [addToFavorite] = useAddFavoriteMutation();
   const [addToCart] = useAddToCartMutation();
   const [deleteFromFavorite] = useDeleteFavoriteMutation();
@@ -123,13 +123,13 @@ const ClothesItem: FC<IClothesItemProps> = ({ clothes }) => {
 
       <div className="flex flex-row flex-wrap justify-around mb-2">
         <Rating
-          value={rating}
-          onChange={(event, newValue) => {
-            setRating(newValue);
-          }}
+          value={clothes.rating?.rate}
+          readOnly
           className="!text-purple-peril"
         />
-        <p className="text-white cursor-pointer">Отзывы (0)</p>
+        <p className="text-white cursor-pointer">
+          Отзывы ({clothes.rating?.count})
+        </p>
       </div>
     </div>
   );
