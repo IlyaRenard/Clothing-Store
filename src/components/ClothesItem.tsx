@@ -17,6 +17,8 @@ import { IClothes } from "../types/Clothes";
 import { IUser } from "../types/User";
 import { IFavorite } from "./../types/Favorite";
 import MyButton from "./UI/MyButton";
+import { NavLink } from "react-router-dom";
+import { useGetClotheByIdMutation } from "../store/reducers/clothes.api";
 
 interface IClothesItemProps {
   clothes: IClothes;
@@ -38,6 +40,7 @@ const ClothesItem: FC<IClothesItemProps> = ({ clothes }) => {
   const [isCart, setIsCart] = useState(false);
   const { data: favoriteData } = useGetFavoriteQuery(user, {});
   const { data: cart } = useGetCartQuery(user, {});
+  const [getClothesById] = useGetClotheByIdMutation();
 
   const favorite: IFavorite = {
     userId: user.id,
@@ -51,6 +54,7 @@ const ClothesItem: FC<IClothesItemProps> = ({ clothes }) => {
     quantity: 1,
   };
 
+  // добавление/удаление товара из избранного
   const favoriteHandler = () => {
     setIsFavorite(!isFavorite);
 
@@ -62,6 +66,7 @@ const ClothesItem: FC<IClothesItemProps> = ({ clothes }) => {
     } else addToFavorite(favorite);
   };
 
+  // добавление/удаление товара из корзины
   const cartHandler = () => {
     setIsCart(!isCart);
     if (cart?.find((val) => val.productId === clothes.id)) {
@@ -72,12 +77,14 @@ const ClothesItem: FC<IClothesItemProps> = ({ clothes }) => {
     }
   };
 
+  //проверка есть ли товар в избраннои
   const isFavoriteHandler = () => {
     if (favoriteData?.find((val) => val.productId === clothes.id)) {
       setIsFavorite(true);
     }
   };
 
+  //проверка есть ли товар в корзине
   const isCartHandler = () => {
     if (cart?.find((val) => val.productId === clothes.id)) {
       setIsCart(true);
@@ -109,7 +116,10 @@ const ClothesItem: FC<IClothesItemProps> = ({ clothes }) => {
         </button>
       </div>
       <div className="flex flex-col">
-        <h2 className="text-[17px] font-bold m-1 text-white line-clamp-1 hover:line-clamp-none cursor-pointer">
+        <h2
+          onClick={() => getClothesById(clothes.id)}
+          className="text-[17px] font-bold m-1 text-white line-clamp-1 hover:line-clamp-none cursor-pointer"
+        >
           {clothes.title}
         </h2>
 
