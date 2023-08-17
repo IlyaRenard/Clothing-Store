@@ -7,6 +7,7 @@ import {
   useDeleteFromCartMutation,
   useGetCartQuery,
 } from "../store/reducers/cart.api";
+import { useGetClotheByIdMutation } from "../store/reducers/clothes.api";
 import {
   useAddFavoriteMutation,
   useDeleteFavoriteMutation,
@@ -18,7 +19,6 @@ import { IUser } from "../types/User";
 import { IFavorite } from "./../types/Favorite";
 import MyButton from "./UI/MyButton";
 import { NavLink } from "react-router-dom";
-import { useGetClotheByIdMutation } from "../store/reducers/clothes.api";
 
 interface IClothesItemProps {
   clothes: IClothes;
@@ -40,7 +40,6 @@ const ClothesItem: FC<IClothesItemProps> = ({ clothes }) => {
   const [isCart, setIsCart] = useState(false);
   const { data: favoriteData } = useGetFavoriteQuery(user, {});
   const { data: cart } = useGetCartQuery(user, {});
-  const [getClothesById] = useGetClotheByIdMutation();
 
   const favorite: IFavorite = {
     userId: user.id,
@@ -116,13 +115,11 @@ const ClothesItem: FC<IClothesItemProps> = ({ clothes }) => {
         </button>
       </div>
       <div className="flex flex-col">
-        <h2
-          onClick={() => getClothesById(clothes.id)}
-          className="text-[17px] font-bold m-1 text-white line-clamp-1 hover:line-clamp-none cursor-pointer"
-        >
-          {clothes.title}
-        </h2>
-
+        <NavLink to={`/clothes/${clothes.id}`}>
+          <h2 className="text-[17px] font-bold m-1 text-white line-clamp-1 hover:line-clamp-none cursor-pointer">
+            {clothes.title}
+          </h2>
+        </NavLink>
         <p className="text-sm m-1 text-white">Цена: {clothes.price} $</p>
       </div>
       {isCart ? (

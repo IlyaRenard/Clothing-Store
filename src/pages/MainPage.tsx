@@ -26,14 +26,23 @@ const MainPage = () => {
 
   return (
     <div className="bg-dark-gray">
-      <div className="p-2 my-2 mx-5 flex flex-row justify-between">
-        <MySelect selectValue={sortValue} selectHandler={sortHandler} />
-        <MyButton>Filter</MyButton>
-      </div>
-      <div className="flex md:flex-row flex-col flex-wrap items-center  justify-center mx-5 my-2">
-        {sortedList?.map((cloth) => (
-          <ClothesItem key={cloth.id} clothes={cloth} />
-        ))}
+      <div className="px-0 md:px-40">
+        <div className="p-2 my-2 mx-5 flex flex-row justify-between">
+          <MySelect selectValue={sortValue} selectHandler={sortHandler} title="Sorted By" />
+          <MyButton>Filter</MyButton>
+        </div>
+        <div className="flex md:flex-row flex-col flex-wrap items-center  justify-center mx-5 my-2">
+          {sortedList?.map((cloth) => (
+            <ClothesItem key={cloth.id} clothes={cloth} />
+          ))}
+        </div>
+        <div className="flex flex-row items-center justify-center my-2 p-2">
+          <MyButton>1</MyButton>
+          <MyButton>2</MyButton>
+          <MyButton>3</MyButton>
+          <MyButton>4</MyButton>
+          <MyButton>5</MyButton>
+        </div>
       </div>
     </div>
   );

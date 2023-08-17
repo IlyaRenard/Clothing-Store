@@ -4,6 +4,7 @@ import CartPage from "./pages/CartPage";
 import MainPage from "./pages/MainPage";
 import FavoritePage from "./pages/FavoritePage";
 import SignInPage from "./pages/SignInPage";
+import ClothingDetailsPage from "./pages/ClothingDetailsPage";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path="/cart" element={<CartPage />} />
         <Route path="/signin" element={<SignInPage />} />
         <Route path="/favorite" element={<FavoritePage />} />
+        <Route path="/clothes/:id" element={<ClothingDetailsPage />} />
       </Routes>
     </div>
   );

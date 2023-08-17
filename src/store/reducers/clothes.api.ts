@@ -5,7 +5,7 @@ import { commonApi } from "./common.api";
 export const clothesApi = commonApi.injectEndpoints({
     endpoints: (build) => ({
         getClothes: build.query<IClothes[], null>({
-            query: () => '/clothes',
+            query: () => `/clothes`,
             providesTags: result => ['Clothes']
         }),
         addClothes: build.mutation<null, IClothes>({
@@ -29,9 +29,15 @@ export const clothesApi = commonApi.injectEndpoints({
                 method: 'GET',
             }),
             invalidatesTags: ['Clothes']
+        }),
+        sortByDESC: build.mutation<IClothes[], string>({
+            query: (option) => ({
+                url: `/clothes?_sort=${option}&_order=desc`,
+                method: 'GET',
+            }),
+            invalidatesTags: ['Clothes']
         })
-
     })
 })
 
-export const { useGetClothesQuery, useAddClothesMutation, useSortByASCMutation, useGetClotheByIdMutation } = clothesApi
+export const { useGetClothesQuery, useAddClothesMutation, useSortByASCMutation, useGetClotheByIdMutation, useSortByDESCMutation } = clothesApi
