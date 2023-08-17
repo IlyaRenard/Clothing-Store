@@ -38,19 +38,17 @@ const Header: FC = () => {
   };
 
   useEffect(() => {
-    searchClothes(searchQuery);
-    
+    if (searchQuery.length >= 2) searchClothes(searchQuery);
   }, [searchQuery]);
 
   const searchHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(searchClothesList);
   };
 
   return (
     <header>
       <nav className="bg-dark-gray px-4 lg:px-6 py-2.5 shadow-md">
-        <div className="flex flex-wrap justify-between items-center">
+        <div className="flex flex-wrap justify-between items-center relative">
           <a href="/" className="flex items-center">
             <span className="text-white mr-2 text-[20px] md:block hidden">
               Clothes store
@@ -69,6 +67,27 @@ const Header: FC = () => {
               <img src={searchIcon} alt="search" className="h-7" />
             </button>
           </form>
+
+          {searchQuery && (
+            <div className="absolute box-border md:top-28 top-36 md:left-[26%] left-[10%]  bg-light-gray p-2 flex flex-col z-50 w-auto">
+              {searchClothesList?.map((cloth) => (
+                <div className="p-2 mb-2 flex flex-row justify-center bg-dark-gray">
+                  <img
+                    src={cloth.image}
+                    alt={cloth.image}
+                    className="h-auto w-20"
+                  />
+                  <a
+                    key={cloth.id}
+                    href=""
+                    className=" h-full   w-full text-white text-xl hover:text-mint-green"
+                  >
+                    {cloth.title}
+                  </a>
+                </div>
+              ))}
+            </div>
+          )}
 
           <div className="flex items-center  mr-7">
             <div className="relative">
