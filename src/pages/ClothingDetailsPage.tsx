@@ -48,8 +48,8 @@ const ClothingDetailsPage = () => {
           <MyButton>В корзину</MyButton>
 
           <div>
-            <h2>Description</h2>
-            <h3>{clothing?.description}</h3>
+            <h2 className="text-white font bold">Description</h2>
+            <h3 className="text-white">{clothing?.description}</h3>
           </div>
         </div>
       </div>

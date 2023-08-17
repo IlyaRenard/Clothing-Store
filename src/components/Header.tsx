@@ -1,14 +1,17 @@
-import { FC, useState } from "react";
+import { FC, FormEvent, useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import cartIcon from "../assets/image/cart.svg";
 import logo from "../assets/image/logo.svg";
 import menu from "../assets/image/menu.svg";
 import searchIcon from "../assets/image/search.svg";
 import { useGetCartQuery } from "../store/reducers/cart.api";
+import {
+  useGetClothesQuery,
+  useSearchByTitleMutation,
+} from "../store/reducers/clothes.api";
 import { useGetFavoriteQuery } from "../store/reducers/favorite.api";
 import { IUser } from "../types/User";
 import MyButton from "./UI/MyButton";
-import { useGetClothesQuery } from "../store/reducers/clothes.api";
 
 const Header: FC = () => {
   const user: IUser = {
@@ -20,6 +23,9 @@ const Header: FC = () => {
   const { data: cart } = useGetCartQuery(user, {});
   const { data: favorite } = useGetFavoriteQuery(user, {});
   const { data: clothes } = useGetClothesQuery(null, {});
+  const [searchClothes, { data: searchClothesList }] =
+    useSearchByTitleMutation();
+  const [searchQuery, setSearchQuery] = useState("");
   const [open, setOpen] = useState(false);
   const [openCategory, setOpenCategory] = useState(false);
 
@@ -29,6 +35,16 @@ const Header: FC = () => {
 
   const dropDownCategoryhandler = () => {
     setOpenCategory(!openCategory);
+  };
+
+  useEffect(() => {
+    searchClothes(searchQuery);
+    
+  }, [searchQuery]);
+
+  const searchHandler = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.log(searchClothesList);
   };
 
   return (
@@ -41,16 +57,18 @@ const Header: FC = () => {
             </span>
             <img src={logo} className="mr-3 h-9 sm:h-9" alt="Logo" />
           </a>
-          <div className="h-full w-[50%] flex">
+          <form className="h-full w-[50%] flex" onSubmit={searchHandler}>
             <input
               type="text"
               placeholder="Search..."
-              className="w-full border-0 outline-none rounded-l-md py-2 px-3 text-white bg-light-gray"
+              className="w-full border-none outline-none rounded-l-md py-2 px-3 text-white bg-light-gray"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
             />
-            <button className="rounded-r-md p-2 bg-purple-peril">
+            <button className="rounded-r-md p-2 bg-purple-peril" type="submit">
               <img src={searchIcon} alt="search" className="h-7" />
             </button>
-          </div>
+          </form>
 
           <div className="flex items-center  mr-7">
             <div className="relative">

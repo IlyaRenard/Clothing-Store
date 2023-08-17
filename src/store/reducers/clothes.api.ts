@@ -36,8 +36,15 @@ export const clothesApi = commonApi.injectEndpoints({
                 method: 'GET',
             }),
             invalidatesTags: ['Clothes']
+        }),
+        searchByTitle: build.mutation<IClothes[], string>({
+            query: (query) => ({
+                url: `/clothes?title_like=${query}`,
+                method: "GET"
+            }),
+            invalidatesTags: ['Clothes']
         })
     })
 })
 
-export const { useGetClothesQuery, useAddClothesMutation, useSortByASCMutation, useGetClotheByIdMutation, useSortByDESCMutation } = clothesApi
+export const { useGetClothesQuery, useAddClothesMutation, useSortByASCMutation, useGetClotheByIdMutation, useSortByDESCMutation, useSearchByTitleMutation } = clothesApi

@@ -1,5 +1,6 @@
 import { Rating } from "@mui/material";
 import { FC, useEffect, useState } from "react";
+import { NavLink } from "react-router-dom";
 import favoriteDefault from "../assets/image/favoriteDefault.svg";
 import favoriteTap from "../assets/image/favoriteTap.svg";
 import {
@@ -7,7 +8,6 @@ import {
   useDeleteFromCartMutation,
   useGetCartQuery,
 } from "../store/reducers/cart.api";
-import { useGetClotheByIdMutation } from "../store/reducers/clothes.api";
 import {
   useAddFavoriteMutation,
   useDeleteFavoriteMutation,
@@ -18,7 +18,6 @@ import { IClothes } from "../types/Clothes";
 import { IUser } from "../types/User";
 import { IFavorite } from "./../types/Favorite";
 import MyButton from "./UI/MyButton";
-import { NavLink } from "react-router-dom";
 
 interface IClothesItemProps {
   clothes: IClothes;
@@ -114,14 +113,15 @@ const ClothesItem: FC<IClothesItemProps> = ({ clothes }) => {
           />
         </button>
       </div>
-      <div className="flex flex-col">
-        <NavLink to={`/clothes/${clothes.id}`}>
+      <NavLink to={`/clothes/${clothes.id}`}>
+        <div className="flex flex-col">
           <h2 className="text-[17px] font-bold m-1 text-white line-clamp-1 hover:line-clamp-none cursor-pointer">
             {clothes.title}
           </h2>
-        </NavLink>
-        <p className="text-sm m-1 text-white">Цена: {clothes.price} $</p>
-      </div>
+
+          <p className="text-sm m-1 text-white">Цена: {clothes.price} $</p>
+        </div>
+      </NavLink>
       {isCart ? (
         <MyButton onClick={() => cartHandler()}>Удалить из корзины</MyButton>
       ) : (
