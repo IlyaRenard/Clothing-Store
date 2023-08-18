@@ -71,20 +71,24 @@ const Header: FC = () => {
           {searchQuery && (
             <div className="absolute box-border md:top-28 top-36 md:left-[26%] left-[10%]  bg-light-gray p-2 flex flex-col z-50 w-auto">
               {searchClothesList?.map((cloth) => (
-                <div className="p-2 mb-2 flex flex-row justify-center bg-dark-gray">
-                  <img
-                    src={cloth.image}
-                    alt={cloth.image}
-                    className="h-auto w-20"
-                  />
-                  <a
-                    key={cloth.id}
-                    href=""
-                    className=" h-full   w-full text-white text-xl hover:text-mint-green"
+                <NavLink to={`/clothes/${cloth.id}`}>
+                  <div
+                    className="p-2 mb-2 flex flex-row justify-center bg-dark-gray"
+                    onClick={() => setSearchQuery("")}
                   >
-                    {cloth.title}
-                  </a>
-                </div>
+                    <img
+                      src={cloth.image}
+                      alt={cloth.image}
+                      className="h-auto w-20"
+                    />
+                    <h2
+                      key={cloth.id}
+                      className=" h-full   w-full text-white text-xl hover:text-mint-green cursor-pointer"
+                    >
+                      {cloth.title}
+                    </h2>
+                  </div>
+                </NavLink>
               ))}
             </div>
           )}
