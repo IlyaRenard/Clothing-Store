@@ -15,7 +15,7 @@ const MySelect: FC<PropsWithChildren<MySelectProps>> = ({
 }) => {
   return (
     <select
-      className="bg-dark-gray text-white py-1 px-4 text-xl"
+      className="bg-dark-gray text-white py-1 px-4 text-xl m-2"
       onChange={selectHandler}
       defaultValue={"DEFAULT"}
       {...props}

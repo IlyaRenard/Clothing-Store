@@ -1,12 +1,16 @@
 import { ChangeEvent, useEffect, useState } from "react";
 import ClothesItem from "../components/ClothesItem";
 import MyButton from "../components/UI/MyButton";
-import { useSortByASCMutation } from "../store/reducers/clothes.api";
+import {
+  useGetClothesQuery,
+  useSortByASCMutation,
+} from "../store/reducers/clothes.api";
 import MySelect from "./../components/UI/MySelect";
-import { NavLink } from 'react-router-dom';
+import { NavLink } from "react-router-dom";
 
 const MainPage = () => {
-  //const { data: clothes } = useGetClothesQuery(null, {});
+  const [pages, setPages] = useState(0);
+  const { data: clothes } = useGetClothesQuery(null, {});
   const [sortType, setSortType] = useState<string>("");
   const [sortByASC, { data: sortedList }] = useSortByASCMutation();
 
@@ -49,10 +53,10 @@ const MainPage = () => {
           <MyButton>5</MyButton>
         </div>
         <div>
-          <NavLink to={`/clothes/add`}>          
-          <button className="fixed right-10 text-[135px] pb-7 bottom-10 bg-mint-green m-2 p-0 h-24 min-h-max min-w-max w-24 rounded-full flex justify-center items-center">
-            +
-          </button>
+          <NavLink to={`/add`}>
+            <button className="fixed right-10 text-[135px] pb-7 bottom-10 bg-mint-green m-2 p-0 h-24 min-h-max min-w-max w-24 rounded-full flex justify-center items-center">
+              +
+            </button>
           </NavLink>
         </div>
       </div>
