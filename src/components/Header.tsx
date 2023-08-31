@@ -6,8 +6,7 @@ import menu from "../assets/image/menu.svg";
 import searchIcon from "../assets/image/search.svg";
 import { useGetCartQuery } from "../store/reducers/cart.api";
 import {
-  useGetClothesQuery,
-  useSearchByTitleMutation,
+  useSearchByTitleMutation
 } from "../store/reducers/clothes.api";
 import { useGetFavoriteQuery } from "../store/reducers/favorite.api";
 import { IUser } from "../types/User";
@@ -22,7 +21,7 @@ const Header: FC = () => {
   };
   const { data: cart } = useGetCartQuery(user, {});
   const { data: favorite } = useGetFavoriteQuery(user, {});
-  const { data: clothes } = useGetClothesQuery(null, {});
+
   const [searchClothes, { data: searchClothesList }] =
     useSearchByTitleMutation();
   const [searchQuery, setSearchQuery] = useState("");
@@ -139,15 +138,9 @@ const Header: FC = () => {
               !openCategory ? "-translate-x-96" : "translate-x-0"
             }`}
           >
-            {clothes?.map((cloth) => (
-              <a
-                key={cloth.id}
-                href=""
-                className="p-2 w-[250px] h-full mx-3 mb-2 shadow-lg"
-              >
-                {cloth.category}
-              </a>
-            ))}
+            <a href="" className="p-2 w-[250px] h-full mx-3 mb-2 shadow-lg">
+              Категории
+            </a>
           </div>
         </div>
       </nav>

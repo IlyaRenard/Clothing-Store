@@ -1,4 +1,5 @@
 import { ChangeEvent, useEffect, useState } from "react";
+import { NavLink } from "react-router-dom";
 import ClothesItem from "../components/ClothesItem";
 import MyButton from "../components/UI/MyButton";
 import {
@@ -6,11 +7,10 @@ import {
   useSortByASCMutation,
 } from "../store/reducers/clothes.api";
 import MySelect from "./../components/UI/MySelect";
-import { NavLink } from "react-router-dom";
 
 const MainPage = () => {
   const [pages, setPages] = useState(0);
-  const { data: clothes } = useGetClothesQuery(null, {});
+  const { data: clothes } = useGetClothesQuery({ limit: 10, page: 1 }, {});
   const [sortType, setSortType] = useState<string>("");
   const [sortByASC, { data: sortedList }] = useSortByASCMutation();
 

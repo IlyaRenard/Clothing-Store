@@ -14,8 +14,7 @@ const FavoritePage = () => {
   };
 
   const { data: favorites } = useGetFavoriteQuery(user, {});
-  const { data: clothes } = useGetClothesQuery(null, {});
-
+  const { data: clothes } = useGetClothesQuery({ limit: 100, page: 1 }, {});
   const [favoriteClothes, setFavoriteClothes] = useState<IClothes[]>([]);
 
   const getFavoriteById = () => {

@@ -69,15 +69,20 @@ const CartPage = () => {
                 <div className="flex flex-row md:justify-between justify-end items-center md:w-[20%] w-full">
                   <div className="p-2 flex flex-row items-center">
                     <MyButton
-                      onClick={() =>
-                        updateQuantity({
-                          ...val,
-                          quantity: val.quantity - 1,
-                        })
-                      }
+                      onClick={() => {
+                        if (val.quantity <= 0) {
+                          deleteProductFromCart(val);
+                        } else {
+                          updateQuantity({
+                            ...val,
+                            quantity: val.quantity - 1,
+                          });
+                        }
+                      }}
                     >
                       -
                     </MyButton>
+
                     <span className="text-black text-[22px]  font-bold bg-white px-1 h-fit  rounded-lg">
                       {val.quantity}
                     </span>

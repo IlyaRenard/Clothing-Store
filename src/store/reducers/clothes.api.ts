@@ -4,9 +4,15 @@ import { commonApi } from "./common.api";
 
 export const clothesApi = commonApi.injectEndpoints({
     endpoints: (build) => ({
-        getClothes: build.query<IClothes[], null>({
-            query: () => `/clothes`,
-            providesTags: result => ['Clothes']
+        getClothes: build.query<IClothes[], {}>({
+            query: (args: { limit: number, page: number }) => ({
+                url: `/clothes`,
+                params: {
+                    _limit: args.limit,
+                    _page: args.page
+                }
+            }),
+            providesTags: ['Clothes']
         }),
         addClothes: build.mutation<null, IClothes>({
             query: (clothes) => ({
